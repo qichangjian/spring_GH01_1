@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 文件不放在 source root 目录下：用全路径导入就行-->
+    <!-- 创建一个对象
+        id:对象的唯一标示
+        class:实现类的全限定名称
+     -->
+    <!--同一个接口不同实现类的bean-->
+    <bean id="userDao" class="com.qcj.dao.impl.UserDaoImpl"/>
+    <bean id="userDao2" class="com.qcj.dao.impl.UserDaoImpl2"/>
+
+    <!-- 调用无参构造创建对象-->
+    <!-- 接口+setter方法 -->
+    <!--属性标签 name:属性名称serserviceimpl中的属性名称  value:简单类型的赋值  ref:引用对象赋值 (这个是上边bean id=userDao)-->
+    <!--如果使用userDao2中方法就ref=userDao2-->
+    <!--<bean id="userService" class="com.qcj.service.impl.UserServiceImpl">
+        <property name="userDao" ref="userDao2"></property>
+    </bean>-->
+
+    <!-- 调用有参构造创建对象-->
+    <!-- 接口+构造方法 -->
+    <bean id="userService" class="com.qcj.service.impl.UserServiceImpl">
+        <!--属性标签 type：参数类型 index：参数类型（不知道名字用index） name:属性名称serserviceimpl中的属性名称  value:简单类型的赋值  ref:引用对象赋值 (这个是上边bean id=userDao)-->
+        <constructor-arg name="userDao" ref="userDao2"></constructor-arg>
+    </bean>
+</beans>
